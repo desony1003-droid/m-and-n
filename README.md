@@ -1,4 +1,3 @@
-# m-and-n
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -129,10 +128,10 @@
             display: block;
         }
 
-        /* Thư 1: Ảnh bọn mình */
+        /* Thư 1 & Thư 3: Định dạng ảnh */
         .img-couple {
             width: 100%;
-            max-height: 350px;
+            max-height: 400px;
             object-fit: cover;
             border-radius: 15px;
             border: 5px solid var(--pink-light);
@@ -148,8 +147,8 @@
 
         .disc-container {
             position: relative;
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
         }
 
         .disc {
@@ -157,8 +156,8 @@
             height: 100%;
             background: #222;
             border-radius: 50%;
-            border: 5px solid var(--pink-dark);
-            animation: spin 4s linear infinite;
+            border: 6px solid var(--pink-dark);
+            animation: spin 5s linear infinite;
             animation-play-state: paused;
             object-fit: cover;
         }
@@ -170,11 +169,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             background-color: white;
             border-radius: 50%;
-            border: 2px solid #222;
+            border: 3px solid #222;
         }
 
         @keyframes spin {
@@ -188,8 +187,7 @@
 
         /* Thư 3: Tâm tư dài */
         .love-letter {
-            font-family: 'Dancing Script', cursive, sans-serif;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             line-height: 1.6;
             text-align: left;
             white-space: pre-line;
@@ -197,6 +195,7 @@
             background: var(--pink-light);
             padding: 15px;
             border-radius: 10px;
+            margin-bottom: 15px;
         }
 
         /* Hiệu ứng trái tim khi click vào màn hình */
@@ -229,7 +228,7 @@
         
         <div id="letter1" class="content-box">
             <h3 style="color: var(--pink-dark);">Khoảnh khắc của chúng mình 💕</h3>
-            <img class="img-couple" src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=500" alt="Ảnh tụi mình">
+            <img class="img-couple" src="https://i.ibb.co/BVPbRcNm/1000006361.jpg" alt="Ảnh tụi mình xích đu">
             <p style="margin-top: 10px; font-style: italic;">"Nơi nào có em, nơi đó có hạnh phúc."</p>
         </div>
 
@@ -237,11 +236,11 @@
             <h3 style="color: var(--pink-dark);">Giai điệu tụi mình thích 🎵</h3>
             <div class="music-box">
                 <div class="disc-container">
-                    <img id="musicDisc" class="disc" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=300" alt="Disc">
+                    <img id="musicDisc" class="disc" src="https://i.ibb.co/4RdYLCLb/1000006263.jpg" alt="Disc">
                 </div>
                 <audio id="myAudio" controls>
                     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-                    Trình duyệt của bạn không hỗ trợ phát nhạc công nghệ này rồi :<
+                    Trình duyệt của bạn không hỗ trợ phát nhạc rồi :<
                 </audio>
                 <p style="font-size: 0.9rem; color: #888;">(Bấm nút phát nhạc để đĩa xoay nhé!)</p>
             </div>
@@ -254,10 +253,11 @@
 
                 Anh viết những dòng này để nói với em rằng anh thương em nhiều lắm. Cảm ơn em đã xuất hiện và làm cho cuộc sống của anh tràn ngập những gam màu hồng ngọt ngào như Hello Kitty vậy đó! 
 
-                Mong rằng chúng mình sẽ luôn nắm tay nhau đi qua thêm nhiều ngày tháng bình yên nữa nhé. Chúc em bé luôn cười thật tươi!
+                Mong rằng chúng mình sẽ luôn nắm tay nhau đi qua thêm nhiều ngày tháng bình yên, cùng nhau lưu giữ thật nhiều kỷ niệm đẹp của tuổi học trò nhé. Chúc em bé của anh luôn cười thật tươi!
 
                 Yêu em rất nhiều! 💖
             </div>
+            <img class="img-couple" src="https://i.ibb.co/608dSJPj/1000006259.png" alt="Em bé của anh" style="max-height: 320px;">
         </div>
 
     </div>
@@ -265,11 +265,9 @@
     <script>
         // Hàm đóng/mở nội dung các bức thư
         function openLetter(index) {
-            // Ẩn tất cả các hộp thư trước
             for (let i = 1; i <= 3; i++) {
                 document.getElementById('letter' + i).classList.remove('active');
             }
-            // Hiện hộp thư được chọn
             document.getElementById('letter' + index).classList.add('active');
         }
 
@@ -286,22 +284,18 @@
 
         // Hiệu ứng nhấp chuột ra trái tim bay lên
         document.addEventListener('click', function(e) {
-            // Tạo một thẻ span chứa hình trái tim
             const heart = document.createElement('span');
             heart.classList.add('heart-click');
-            heart.innerHTML = '💖'; // Hoặc các icon khác như 💕, 💝, 🐱
+            heart.innerHTML = '💖'; 
             
-            // Đặt vị trí xuất hiện ngay tại đầu ngón tay/chuột click
             heart.style.left = e.pageX + 'px';
             heart.style.top = e.pageY + 'px';
 
-            // Random kích thước một chút cho tự nhiên
-            const size = Math.random() * 15 + 15; // từ 15px đến 30px
+            const size = Math.random() * 15 + 15; 
             heart.style.fontSize = size + 'px';
 
             document.body.appendChild(heart);
 
-            // Tự động xóa trái tim sau 1 giây khi hiệu ứng kết thúc để tránh nặng máy
             setTimeout(() => {
                 heart.remove();
             }, 1000);
