@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kimi no Nawa x Hello Kitty 💕</title>
+    <title>Hello Kitty x Kimi no Nawa 💕</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
     <style>
         :root {
             --kitty-pink: #FFB7C5;
             --kitty-dark: #FB6F92;
-            --anime-blue: #A2D2FF;
-            --glass-bg: rgba(255, 255, 255, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.6);
+            --pink-bg: #FFE5EC;
+            --glass-bg: rgba(255, 255, 255, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.7);
         }
 
         body {
@@ -19,8 +19,8 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Comfortaa', cursive, sans-serif;
-            /* Nền bầu trời hoàng hôn đan xen ngân hà của Your Name pha sắc hồng Kitty */
-            background: linear-gradient(180deg, #FFB7C5 0%, #FFAAA6 30%, #D4A5B8 60%, #83A4D4 100%);
+            /* Nền bầu trời hoàng hôn Your Name hòa quyện sắc hồng Kitty */
+            background: linear-gradient(180deg, #FFB7C5 0%, #FFAAA6 35%, #D4A5B8 70%, #83A4D4 100%);
             background-size: cover;
             background-attachment: fixed;
             color: #4A4A4A;
@@ -29,81 +29,87 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
-            perspective: 1600px; /* Tạo độ sâu không gian 3D cực đại */
+            perspective: 1200px;
         }
 
-        /* Hiệu ứng mây trôi lơ lửng góc màn hình kiểu Anime */
-        .anime-cloud {
+        /* Hình ảnh Hello Kitty đặc trưng ở góc màn hình */
+        .kitty-decoration {
             position: fixed;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(4px);
-            border-radius: 50px;
+            bottom: 15px;
+            right: 15px;
+            width: 90px;
+            height: 90px;
+            background: url('https://i.pinimg.com/originals/a0/78/3e/a0783e1577908b981600f72295551ec4.png') no-repeat center/contain;
+            opacity: 0.7;
             pointer-events: none;
-            opacity: 0.5;
-            animation: moveCloud 25s linear infinite;
-        }
-        @keyframes moveCloud {
-            0% { transform: translateX(-200px); }
-            100% { transform: translateX(110vw); }
+            z-index: 5;
         }
 
         h1 {
-            font-size: 2.3rem;
+            font-size: 2.2rem;
             color: white;
             text-align: center;
-            margin-top: 40px;
+            margin-top: 35px;
             font-weight: 700;
-            letter-spacing: 2px;
-            text-shadow: 0 4px 15px rgba(251, 111, 146, 0.5), 0 0 30px rgba(255,255,255,0.6);
-            animation: pulse 2.5s ease-in-out infinite alternate;
+            text-shadow: 0 4px 12px rgba(251, 111, 146, 0.6), 0 0 20px rgba(255,255,255,0.4);
+            animation: floatText 3s ease-in-out infinite alternate;
             z-index: 10;
         }
-        @keyframes pulse {
-            0% { transform: scale(1); text-shadow: 0 4px 15px rgba(251, 111, 146, 0.5); }
-            100% { transform: scale(1.03); text-shadow: 0 4px 25px rgba(251, 111, 146, 0.8), 0 0 40px rgba(255,255,255,0.8); }
+        @keyframes floatText {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-8px); }
         }
 
-        #sakura-canvas {
+        /* Canvas cho hiệu ứng Cánh hoa và Trái tim đồng thời tự rơi */
+        #falling-canvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
             z-index: 2;
         }
 
-        /* 3 Thư kiểu thẻ 3D Hologram siêu ảo */
+        /* 3 Thư kiểu hộp quà Hello Kitty 3D */
         .letters-container {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 25px;
             flex-wrap: wrap;
-            margin-top: 40px;
+            margin-top: 35px;
             z-index: 10;
             transform-style: preserve-3d;
-            transform: rotateX(10deg);
             transition: transform 0.1s ease-out;
         }
 
         .envelope {
-            width: 100px;
-            height: 100px;
-            background: rgba(255, 255, 255, 0.7);
+            width: 105px;
+            height: 105px;
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(10px);
             border: 3px solid var(--glass-border);
             border-radius: 24px;
             cursor: pointer;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), inset 0 0 15px rgba(255,255,255,0.6);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), inset 0 0 12px rgba(255, 255, 255, 0.6);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            transform: translateZ(30px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateZ(20px);
+            position: relative;
+        }
+
+        /* Thêm chiếc nơ đỏ Hello Kitty lên đầu mỗi bức thư */
+        .envelope::before {
+            content: "🎀";
+            position: absolute;
+            top: -12px;
+            font-size: 1.4rem;
+            transition: transform 0.3s;
         }
 
         .envelope span {
-            font-size: 1.8rem;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
-            transition: transform 0.3s;
+            font-size: 1.7rem;
+            margin-top: 10px;
         }
 
         .envelope p {
@@ -114,98 +120,88 @@
         }
 
         .envelope:hover {
-            transform: translateY(-15px) translateZ(80px) rotateY(10deg);
+            transform: translateY(-12px) translateZ(60px) rotateY(8deg);
             background: white;
             border-color: var(--kitty-dark);
-            box-shadow: 0 25px 45px rgba(251, 111, 146, 0.4);
+            box-shadow: 0 20px 40px rgba(251, 111, 146, 0.35);
         }
-        .envelope:hover span {
-            transform: scale(1.2) rotate(-10deg);
+        .envelope:hover::before {
+            transform: scale(1.25) rotate(15deg);
         }
 
-        /* Hộp hiển thị nội dung dạng Glassmorphism cao cấp */
+        /* Khung hiển thị nội dung tinh tế */
         .content-container {
-            margin-top: 50px;
+            margin-top: 40px;
             width: 90%;
-            max-width: 460px;
+            max-width: 450px;
             min-height: 400px;
             z-index: 10;
             margin-bottom: 60px;
         }
 
         .content-box {
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.82);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            border-radius: 32px;
-            padding: 30px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1), inset 0 0 30px rgba(255, 255, 255, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 28px;
+            padding: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
             display: none;
             text-align: center;
-            transform-style: preserve-3d;
-            animation: openBox3D 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation: openBox3D 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
         @keyframes openBox3D {
-            0% { opacity: 0; transform: scale(0.6) rotateX(-30deg) translateZ(-200px); }
-            100% { opacity: 1; transform: scale(1) rotateX(0deg) translateZ(0); }
+            0% { opacity: 0; transform: scale(0.75) translateZ(-100px); }
+            100% { opacity: 1; transform: scale(1) translateZ(0); }
         }
 
         .active { display: block; }
 
-        /* Style ảnh sang xịn viền mềm */
         .img-couple {
             width: 100%;
-            max-height: 380px;
+            max-height: 360px;
             object-fit: cover;
-            border-radius: 24px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            border-radius: 20px;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
             border: 4px solid white;
-            transition: transform 0.3s;
-        }
-        .img-couple:hover {
-            transform: scale(1.02);
         }
 
-        /* Đĩa nhạc 3D lơ lửng */
+        /* Đĩa nhạc xoay 3D lãng mạn */
         .music-box {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
 
         .disc-container {
             position: relative;
-            width: 210px;
-            height: 210px;
-            perspective: 1000px;
+            width: 190px;
+            height: 190px;
         }
 
         .disc {
             width: 100%; height: 100%;
             border-radius: 50%;
             border: 6px solid white;
-            box-shadow: 0 20px 45px rgba(0,0,0,0.25);
-            animation: spin 8s linear infinite;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            animation: spin 7s linear infinite;
             animation-play-state: paused;
             object-fit: cover;
         }
 
+        /* Tâm đĩa nhạc có hình Hello Kitty */
         .disc-container::after {
-            content: "🎀";
+            content: "";
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 45px; height: 45px;
-            background: white;
+            width: 40px; height: 40px;
+            background: white url('https://i.pinimg.com/originals/a0/78/3e/a0783e1577908b981600f72295551ec4.png') no-repeat center/contain;
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.3rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -213,86 +209,81 @@
         audio {
             width: 100%;
             margin-top: 15px;
-            border-radius: 30px;
             accent-color: var(--kitty-dark);
         }
 
-        /* Chữ tâm thư viết tay thanh lịch */
+        /* Khung viết tâm thư dáng tay */
         .love-letter {
             font-family: 'Patrick Hand', cursive;
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             line-height: 1.6;
             text-align: left;
             white-space: pre-line;
             color: #444;
-            background: rgba(255, 255, 255, 0.5);
-            padding: 22px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.5);
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
+            background: rgba(255, 255, 255, 0.4);
+            padding: 20px;
+            border-radius: 18px;
+            margin-bottom: 25px;
         }
 
-        /* Hiệu ứng nhấp chuột: Tim tụ tụ tụ lấp lánh */
+        /* Hiệu ứng nhấp màn hình lấp lánh thêm phần sinh động */
         .click-sparkle {
             position: absolute;
             pointer-events: none;
-            animation: sparkleFly 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+            animation: sparkleFly 1s ease-out forwards;
             z-index: 9999;
         }
-
         @keyframes sparkleFly {
-            0% { transform: translate(-50%, -50%) scale(0.4) rotate(0deg); opacity: 1; filter: drop-shadow(0 0 2px #fff); }
-            50% { opacity: 1; filter: drop-shadow(0 0 8px rgba(251,111,146,0.8)); }
-            100% { transform: translate(-50%, -160px) scale(1.4) rotate(120deg); opacity: 0; }
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -140px) scale(1.3); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Các tầng mây anime trôi phía sau -->
-    <div class="anime-cloud" style="top: 15%; width: 180px; height: 45px; animation-duration: 35s;"></div>
-    <div class="anime-cloud" style="top: 40%; width: 250px; height: 60px; animation-duration: 25s; animation-delay: -5s; opacity: 0.3;"></div>
+    <!-- Hình trang trí Hello Kitty dễ thương -->
+    <div class="kitty-decoration"></div>
 
-    <canvas id="sakura-canvas"></canvas>
+    <!-- Mưa hoa đào và trái tim tự rơi -->
+    <canvas id="falling-canvas"></canvas>
 
     <h1>Gửi Em Bé Của Anh 🎀</h1>
 
-    <!-- 3 Hộp thiệp 3D cực sang -->
+    <!-- 3 Thiệp 3D Hello Kitty -->
     <div class="letters-container" id="view3d">
         <div class="envelope" onclick="openLetter(1)"><span>🌸</span><p>Kỷ Niệm</p></div>
         <div class="envelope" onclick="openLetter(2)"><span>🌌</span><p>Giai Điệu</p></div>
         <div class="envelope" onclick="openLetter(3)"><span>💌</span><p>Tâm Tư</p></div>
     </div>
 
-    <!-- Khung nội dung -->
+    <!-- Hộp nội dung -->
     <div class="content-container">
         
         <!-- Bức thư 1 -->
         <div id="letter1" class="content-box">
-            <h3 style="color: var(--kitty-dark); margin-top: 0; font-size: 1.2rem;">Khoảnh khắc tụi mình 💕</h3>
+            <h3 style="color: var(--kitty-dark); margin-top: 0;">Khoảnh khắc tụi mình 💕</h3>
             <img class="img-couple" src="https://i.ibb.co/BVPbRcNm/1000006361.jpg" alt="Ảnh tụi mình xích đu">
-            <p style="margin-top: 15px; font-style: italic; color: #666; font-size: 0.9rem;">"Dù em ở bất kỳ đâu, anh nhất định sẽ đi tìm em."</p>
+            <p style="margin-top: 12px; font-style: italic; color: #666; font-size: 0.85rem;">"Dù em ở bất kỳ đâu, anh nhất định sẽ đi tìm em."</p>
         </div>
 
         <!-- Bức thư 2 -->
         <div id="letter2" class="content-box">
-            <h3 style="color: var(--kitty-dark); margin-top: 0; font-size: 1.2rem;">Giai điệu Your Name 🎵</h3>
+            <h3 style="color: var(--kitty-dark); margin-top: 0;">Giai điệu Your Name 🎵</h3>
             <div class="music-box">
                 <div class="disc-container">
                     <img id="musicDisc" class="disc" src="https://i.ibb.co/4RdYLCLb/1000006263.jpg" alt="Disc">
                 </div>
-                <!-- Bài nhạc Nandemonaiya siêu lãng mạn -->
+                <!-- Bản nhạc Nandemonaiya (Your Name) huyền thoại -->
                 <audio id="myAudio" controls loop>
                     <source src="https://files.catbox.moe/k376sc.mp3" type="audio/mpeg">
                 </audio>
-                <p style="font-size: 0.85rem; color: #666; margin: 0;">(Nhấn nút phát nhạc để cảm nhận không gian xoay tròn bạn nhé)</p>
+                <p style="font-size: 0.8rem; color: #777; margin: 0;">(Hãy nhấn Play để khởi động đĩa nhạc xoay tròn nhé!)</p>
             </div>
         </div>
 
         <!-- Bức thư 3 -->
         <div id="letter3" class="content-box">
-            <h3 style="color: var(--kitty-dark); margin-top: 0; font-size: 1.2rem;">Gửi người anh thương 📝</h3>
+            <h3 style="color: var(--kitty-dark); margin-top: 0;">Gửi người anh thương 📝</h3>
             <div class="love-letter">
                 Chào em bé đáng yêu của anh,
 
@@ -302,7 +293,7 @@
 
                 Yêu em rất nhiều! 💖
             </div>
-            <img class="img-couple" src="https://i.ibb.co/608dSJPj/1000006259.png" alt="Em bé" style="max-height: 280px;">
+            <img class="img-couple" src="https://i.ibb.co/608dSJPj/1000006259.png" alt="Em bé" style="max-height: 260px;">
         </div>
 
     </div>
@@ -316,14 +307,14 @@
             document.getElementById('letter' + index).classList.add('active');
         }
 
-        // --- 2. XOAY ĐĨA NHẠC ---
+        // --- 2. ĐĨA NHẠC XOAY ---
         const audio = document.getElementById('myAudio');
         const disc = document.getElementById('musicDisc');
         audio.onplay = () => { disc.style.animationPlayState = 'running'; };
         audio.onpause = () => { disc.style.animationPlayState = 'paused'; };
 
-        // --- 3. CÁNH HOA ANH ĐÀO RƠI NGHỆ THUẬT ---
-        const canvas = document.getElementById('sakura-canvas');
+        // --- 3. ĐỒNG THỜI TỰ RƠI: HOA ANH ĐÀO & TRÁI TIM ---
+        const canvas = document.getElementById('falling-canvas');
         const ctx = canvas.getContext('2d');
         let w = canvas.width = window.innerWidth;
         let h = canvas.height = window.innerHeight;
@@ -333,70 +324,90 @@
             h = canvas.height = window.innerHeight;
         });
 
-        const petals = [];
-        class Petal {
+        const itemsArray = [];
+        const types = ['sakura', 'heart1', 'heart2'];
+
+        class FallingItem {
             constructor() {
                 this.x = Math.random() * w;
                 this.y = Math.random() * h - h;
-                this.r = Math.random() * 6 + 5;
-                this.d = Math.random() * 1 + 0.6; // tốc độ rơi mềm mịn hơn
-                this.horizontalSpeed = Math.random() * 1 + 0.2;
-                this.angle = Math.random() * Math.PI;
+                this.type = types[Math.floor(Math.random() * types.length)];
+                this.size = Math.random() * 10 + 8;
+                this.speedY = Math.random() * 1.2 + 0.8;
+                this.speedX = Math.random() * 0.8 + 0.2;
+                this.angle = Math.random() * 360;
+                this.spin = Math.random() * 2 - 1;
             }
             draw() {
-                ctx.beginPath();
-                ctx.fillStyle = "rgba(255, 183, 197, 0.85)";
-                // Vẽ dáng cánh hoa đào mềm mại mềm mại
-                ctx.arc(this.x, this.y, this.r, 0, Math.PI, parseFloat(Math.random().toFixed(2)));
-                ctx.lineTo(this.x, this.y - this.r);
-                ctx.closePath();
-                ctx.fill();
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle * Math.PI / 180);
+
+                if (this.type === 'sakura') {
+                    // Vẽ cánh hoa anh đào hồng pastel
+                    ctx.beginPath();
+                    ctx.fillStyle = "rgba(255, 183, 197, 0.9)";
+                    ctx.ellipse(0, 0, this.size, this.size / 1.6, 0, 0, 2 * Math.PI);
+                    ctx.fill();
+                } else if (this.type === 'heart1') {
+                    // Vẽ kí tự trái tim lãng mạn màu hồng đậm
+                    ctx.fillStyle = "rgba(251, 111, 146, 0.85)";
+                    ctx.font = `${this.size * 1.2}px Arial`;
+                    ctx.fillText('💖', -this.size/2, this.size/2);
+                } else {
+                    // Trái tim hồng nhạt
+                    ctx.fillStyle = "rgba(255, 194, 209, 0.85)";
+                    ctx.font = `${this.size * 1.2}px Arial`;
+                    ctx.fillText('💕', -this.size/2, this.size/2);
+                }
+                ctx.restore();
             }
             update() {
-                this.y += this.d;
-                this.x += this.horizontalSpeed;
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.angle += this.spin;
                 if (this.y > h || this.x > w) {
-                    this.y = -10;
+                    this.y = -20;
                     this.x = Math.random() * w;
                 }
             }
         }
 
-        for (let i = 0; i < 45; i++) petals.push(new Petal());
+        // Tạo 55 vật thể vừa hoa vừa tim tự rơi liên tục
+        for (let i = 0; i < 55; i++) itemsArray.push(new FallingItem());
 
         function loop() {
             ctx.clearRect(0, 0, w, h);
-            petals.forEach(p => { p.update(); p.draw(); });
+            itemsArray.forEach(item => { item.update(); item.draw(); });
             requestAnimationFrame(loop);
         }
         loop();
 
-        // --- 4. DI CHUYỂN KHÔNG GIAN 3D ĐỘNG (Parallax Cao Cấp) ---
+        // --- 4. HIỆU ỨNG PARALLAX 3D CHO THIỆP ---
         const view3d = document.getElementById('view3d');
         document.addEventListener('mousemove', (e) => {
-            const ax = (window.innerWidth / 2 - e.pageX) / 20;
-            const ay = (window.innerHeight / 2 - e.pageY) / 20;
-            view3d.style.transform = `rotateY(${ax}deg) rotateX(${-ay}deg) rotateX(10deg)`;
+            const ax = (window.innerWidth / 2 - e.pageX) / 25;
+            const ay = (window.innerHeight / 2 - e.pageY) / 25;
+            view3d.style.transform = `rotateY(${ax}deg) rotateX(${-ay}deg)`;
         });
-
         document.addEventListener('touchmove', (e) => {
             const touch = e.touches[0];
-            const ax = (window.innerWidth / 2 - touch.pageX) / 25;
-            const ay = (window.innerHeight / 2 - touch.pageY) / 25;
-            view3d.style.transform = `rotateY(${ax}deg) rotateX(${-ay}deg) rotateX(10deg)`;
+            const ax = (window.innerWidth / 2 - touch.pageX) / 30;
+            const ay = (window.innerHeight / 2 - touch.pageY) / 30;
+            view3d.style.transform = `rotateY(${ax}deg) rotateX(${-ay}deg)`;
         });
 
-        // --- 5. HIỆU ỨNG POPUP HOA ĐÀO + TIM LẤP LÁNH KHI CHẠM ---
-        const items = ['🌸', '💖', '✨', '💕', '🎀'];
+        // --- 5. CHẠM MÀN HÌNH BÙNG NỔ ICON LẤP LÁNH ---
+        const sparkles = ['🌸', '💖', '✨', '🎀'];
         document.addEventListener('click', (e) => {
             const el = document.createElement('span');
             el.classList.add('click-sparkle');
-            el.innerHTML = items[Math.floor(Math.random() * items.length)];
+            el.innerHTML = sparkles[Math.floor(Math.random() * sparkles.length)];
             el.style.left = e.pageX + 'px';
             el.style.top = e.pageY + 'px';
-            el.style.fontSize = Math.random() * 15 + 22 + 'px';
+            el.style.fontSize = Math.random() * 10 + 20 + 'px';
             document.body.appendChild(el);
-            setTimeout(() => el.remove(), 1200);
+            setTimeout(() => el.remove(), 1000);
         });
     </script>
 </body>
