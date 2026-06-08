@@ -58,6 +58,7 @@
             100% { transform: translateY(-8px); }
         }
 
+        /* Khung Canvas cho trận mưa đổ xuống dồn dập */
         #falling-canvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -65,25 +66,27 @@
             z-index: 2;
         }
 
+        /* Cập nhật khung chứa 4 bức thư */
         .letters-container {
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: 15px;
             flex-wrap: wrap;
             margin-top: 35px;
             z-index: 10;
             transform-style: preserve-3d;
+            max-width: 95%;
         }
 
         .envelope {
-            width: 105px;
-            height: 105px;
+            width: 85px;
+            height: 85px;
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(10px);
             border: 3px solid var(--glass-border);
-            border-radius: 24px;
+            border-radius: 20px;
             cursor: pointer;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), inset 0 0 12px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), inset 0 0 10px rgba(255, 255, 255, 0.6);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -97,32 +100,30 @@
             content: "🎀";
             position: absolute;
             top: -12px;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             transition: transform 0.3s;
         }
 
         .envelope span {
-            font-size: 1.7rem;
-            margin-top: 10px;
+            font-size: 1.5rem;
+            margin-top: 8px;
         }
 
         .envelope p {
-            margin: 5px 0 0 0;
-            font-size: 0.8rem;
+            margin: 4px 0 0 0;
+            font-size: 0.75rem;
             font-weight: bold;
             color: var(--kitty-dark);
         }
 
         .envelope:hover {
-            transform: translateY(-12px) translateZ(60px) rotateY(8deg);
+            transform: translateY(-10px) translateZ(50px) rotateY(8deg);
             background: white;
             border-color: var(--kitty-dark);
-            box-shadow: 0 20px 40px rgba(251, 111, 146, 0.35);
-        }
-        .envelope:hover::before {
-            transform: scale(1.25) rotate(15deg);
+            box-shadow: 0 15px 35px rgba(251, 111, 146, 0.35);
         }
 
+        /* Khung hiển thị nội dung thư */
         .content-container {
             margin-top: 40px;
             width: 90%;
@@ -189,6 +190,44 @@
             margin-bottom: 25px;
         }
 
+        /* Giao diện nhập mật khẩu xinh xắn */
+        .password-section {
+            padding: 20px;
+        }
+        .password-section input {
+            width: 80%;
+            padding: 12px 20px;
+            border: 2px solid var(--kitty-pink);
+            border-radius: 50px;
+            font-family: 'Comfortaa', sans-serif;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .password-section input:focus {
+            border-color: var(--kitty-dark);
+            box-shadow: 0 0 10px rgba(251, 111, 146, 0.4);
+        }
+        .password-section button {
+            margin-top: 15px;
+            background: var(--kitty-dark);
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-family: 'Comfortaa', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(251, 111, 146, 0.4);
+            transition: 0.3s;
+        }
+        .password-section button:hover {
+            background: #e65275;
+            transform: translateY(-2px);
+        }
+
         .click-sparkle {
             position: absolute;
             pointer-events: none;
@@ -212,18 +251,17 @@
         <div class="envelope" onclick="openLetter(1)"><span>🌸</span><p>Kỷ Niệm</p></div>
         <div class="envelope" onclick="openLetter(2)"><span>🌌</span><p>Giai Điệu</p></div>
         <div class="envelope" onclick="openLetter(3)"><span>💌</span><p>Tâm Tư</p></div>
+        <div class="envelope" onclick="openLetter(4)" style="border-color: #ffcad4;"><span>🔒</span><p>Thử Thách</p></div>
     </div>
 
     <div class="content-container">
         
-        <!-- Bức thư 1 -->
         <div id="letter1" class="content-box">
             <h3 style="color: var(--kitty-dark); margin-top: 0;">Khoảnh khắc tụi mình 💕</h3>
             <img class="img-couple" src="https://i.ibb.co/BVPbRcNm/1000006361.jpg" alt="Ảnh tụi mình xích đu">
             <p style="margin-top: 12px; font-style: italic; color: #666; font-size: 0.85rem;">"Dù em ở bất kỳ đâu, anh nhất định sẽ đi tìm em."</p>
         </div>
 
-        <!-- Bức thư 2: Nhạc Your Name -->
         <div id="letter2" class="content-box">
             <h3 style="color: var(--kitty-dark); margin-top: 0;">Album Your Name - Spotify 🎵</h3>
             <div class="music-box">
@@ -232,7 +270,6 @@
             </div>
         </div>
 
-        <!-- Bức thư 3 -->
         <div id="letter3" class="content-box">
             <h3 style="color: var(--kitty-dark); margin-top: 0;">Gửi người anh thương 📝</h3>
             <div class="love-letter">
@@ -247,17 +284,65 @@
             <img class="img-couple" src="https://i.ibb.co/3mNn0vSg/1000006357.jpg" alt="Ảnh xích đu của bạn">
         </div>
 
+        <div id="letter4" class="content-box">
+            <h3 style="color: var(--kitty-dark); margin-top: 0;">🔒 Thử Thách Tình Yêu 🎀</h3>
+            
+            <div id="lock-screen" class="password-section">
+                <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px;">Mục này cực kỳ bí mật, chỉ dành riêng cho em bé! Hãy nhập mật mã của tụi mình để mở khóa:</p>
+                <input type="password" id="love-password" placeholder="Nhập mật khẩu vào đây nha...">
+                <br>
+                <button onclick="checkPassword()">Mở Khóa Thư 🔑</button>
+            </div>
+
+            <div id="secret-content" style="display: none;">
+                <div class="love-letter" style="background: rgba(254, 219, 227, 0.4); border: 1px solid var(--kitty-pink);">
+                    🎉 Chúc mừng em bé đã giải mã thành công! 
+
+                    Mật mã chính là con người của em đó: luôn cute, luôn đáng yêu trong mắt anh! Anh muốn nhắn nhủ riêng với em rằng: Dù sau này thế giới có bận rộn thế nào, anh vẫn sẽ luôn ở bên che chở, yêu thương và cưng chiều em vô điều kiện. 
+
+                    Giữ mãi nụ cười tỏa nắng này em nhé, cả bầu trời hoa đào này đang rơi vì em đó! 🌸✨
+                </div>
+                <img class="img-couple" src="https://i.ibb.co/4RdYLCLb/1000006263.jpg" alt="Ảnh kỷ niệm đi học">
+            </div>
+        </div>
+
     </div>
 
     <script>
         function openLetter(index) {
-            for (let i = 1; i <= 3; i++) {
+            for (let i = 1; i <= 4; i++) {
                 document.getElementById('letter' + i).classList.remove('active');
             }
             document.getElementById('letter' + index).classList.add('active');
+            
+            // Nếu mở thư số 4, luôn reset trạng thái nhập mật khẩu cũ
+            if(index === 4) {
+                document.getElementById('lock-screen').style.display = 'block';
+                document.getElementById('secret-content').style.display = 'none';
+                document.getElementById('love-password').value = '';
+            }
         }
 
-        // --- HỆ THỐNG HIỆU ỨNG RƠI TỰ DO SIÊU MƯỢT (OPTIMIZED CANVAS) ---
+        // --- HÀM KIỂM TRA MẬT KHẨU ---
+        function checkPassword() {
+            const pass = document.getElementById('love-password').value;
+            if (pass === 'khanhngoccute') {
+                document.getElementById('lock-screen').style.display = 'none';
+                document.getElementById('secret-content').style.display = 'block';
+                
+                // Hiệu ứng bùng nổ tim lấp lánh ăn mừng
+                for(let i=0; i<15; i++) {
+                    setTimeout(() => {
+                        const fakeEvent = { pageX: window.innerWidth/2 + (Math.random()*200 - 100), pageY: window.innerHeight/2 + (Math.random()*200 - 100) };
+                        document.dispatchEvent(new CustomEvent('click_fake', {detail: fakeEvent}));
+                    }, i * 60);
+                }
+            } else {
+                alert('Học trò nhỏ ơi, sai mật mã rồi nè! Thử lại nhaaa 🎀❌');
+            }
+        }
+
+        // --- HỆ THỐNG MƯA ĐỔ XUỐNG DỒN DẬP (RAIN SHOWER EFFECT) ---
         const canvas = document.getElementById('falling-canvas');
         const ctx = canvas.getContext('2d');
         let w = canvas.width = window.innerWidth;
@@ -268,46 +353,46 @@
             h = canvas.height = window.innerHeight;
         });
 
-        // Tải trước hình ảnh làm sticker để chạy mượt, không lag
         const userStickerImg = new Image();
-        userStickerImg.src = 'https://i.ibb.co/3mNn0vSg/1000006357.jpg'; // Ảnh xích đu 1000006357.jpg
+        userStickerImg.src = 'https://i.ibb.co/3mNn0vSg/1000006357.jpg'; // Sticker ảnh xích đu
 
         const kittyStickerImg = new Image();
-        kittyStickerImg.src = 'https://i.pinimg.com/originals/a0/78/3e/a0783e1577908b981600f72295551ec4.png'; // Hello Kitty
+        kittyStickerImg.src = 'https://i.pinimg.com/originals/a0/78/3e/a0783e1577908b981600f72295551ec4.png'; // Sticker Hello Kitty
 
         const types = ['sakura', 'heart1', 'heart2', 'user_sticker', 'kitty_sticker'];
         const itemsArray = [];
-        const maxItems = 45; // Số lượng vừa vặn để máy yếu vẫn mượt 100%
+        const maxItems = 120; // Tăng số lượng lên gấp đôi để tạo thành một cơn mưa đổ xuống dày đặc
 
         class FallingItem {
             constructor() {
                 this.reset();
-                this.y = Math.random() * h; // Rải đều màn hình lúc vừa vào trang
+                this.y = Math.random() * h; // Rải đều khắp màn hình lúc khởi động web
             }
 
             reset() {
                 this.x = Math.random() * w;
-                this.y = -40;
+                this.y = -50;
                 this.type = types[Math.floor(Math.random() * types.length)];
                 
-                // Định kích thước chuẩn cho từng loại sticker
                 if (this.type === 'user_sticker' || this.type === 'kitty_sticker') {
-                    this.size = Math.random() * 15 + 30; // Sticker ảnh to rõ ràng hơn
+                    this.size = Math.random() * 12 + 28; // Kích thước sticker ảnh rõ ràng
                 } else {
-                    this.size = Math.random() * 8 + 12;  // Tim và hoa đào nhỏ xinh
+                    this.size = Math.random() * 6 + 12;   // Tim và hoa đào nhỏ rơi xen kẽ
                 }
 
-                this.speedY = Math.random() * 40 + 50;  // Tốc độ rơi tính theo giây (pixel/second)
+                // TĂNG TỐC ĐỘ: Rơi nhanh và dốc đứng thẳng xuống như một cơn mưa đổ ào
+                this.speedY = Math.random() * 120 + 160; // Tốc độ rơi nhanh dồn dập (pixel/giây)
+                this.speedX = Math.random() * 0.4 - 0.2; // Độ lệch xiên cực nhỏ để mưa rơi thẳng hướng xuống dưới
+                
                 this.angle = Math.random() * Math.PI * 2;
-                this.spinSpeed = Math.random() * 1.5 - 0.75; // Tốc độ xoay tự do
-                this.swingWave = Math.random() * Math.PI; // Điểm bắt đầu chu kỳ đu đưa trái phải
-                this.swingSpeed = Math.random() * 2 + 1; // Tốc độ lắc lư
-                this.swingRange = Math.random() * 15 + 5; // Độ rộng lắc lư sang hai bên
+                this.spinSpeed = Math.random() * 2.0 - 1.0; 
+                this.swingWave = Math.random() * Math.PI;
+                this.swingSpeed = Math.random() * 1.5 + 0.5; 
+                this.swingRange = Math.random() * 6 + 2; // Giảm biên độ lắc để vật thể lao xuống nhanh hơn, chuẩn dáng mưa rơi
             }
 
             draw() {
                 ctx.save();
-                // Tính toán vị trí lắc lư nhẹ nhàng hình Sin tạo độ bay tự do thực tế
                 let currentX = this.x + Math.sin(this.swingWave) * this.swingRange;
                 
                 ctx.translate(currentX, this.y);
@@ -331,17 +416,15 @@
                 } else if (this.type === 'kitty_sticker') {
                     ctx.drawImage(kittyStickerImg, -this.size / 2, -this.size / 2, this.size, this.size);
                 } else if (this.type === 'user_sticker') {
-                    // Cắt ảnh tròn sticker cho ảnh xích đu của bạn
                     ctx.beginPath();
                     ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
                     ctx.clip();
                     ctx.drawImage(userStickerImg, -this.size / 2, -this.size / 2, this.size, this.size);
                     
-                    // Tạo viền hồng dễ thương cho sticker ảnh của bạn
                     ctx.beginPath();
                     ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
-                    ctx.strokeStyle = "rgba(251, 111, 146, 0.8)";
-                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = "rgba(251, 111, 146, 0.85)";
+                    ctx.lineWidth = 2.5;
                     ctx.stroke();
                 }
                 ctx.restore();
@@ -349,26 +432,24 @@
 
             update(dt) {
                 this.y += this.speedY * dt;
+                this.x += this.speedX;
                 this.angle += this.spinSpeed * dt;
                 this.swingWave += this.swingSpeed * dt;
 
-                // Nếu chạm đáy màn hình thì reset lên lại đỉnh đầu
-                if (this.y > h + 40) {
+                if (this.y > h + 50) {
                     this.reset();
                 }
             }
         }
 
-        // Tạo danh sách vật thể rơi
         for (let i = 0; i < maxItems; i++) {
             itemsArray.push(new FallingItem());
         }
 
-        // Vòng lặp tối ưu hóa thời gian thực (Delta Time) giúp chuyển động mượt mà hoàn hảo
         let lastTime = performance.now();
         function loop(currentTime) {
-            let dt = (currentTime - lastTime) / 1000; // Đổi ra giây
-            if (dt > 0.1) dt = 0.1; // Chống nhảy cóc nếu tab bị ẩn lâu
+            let dt = (currentTime - lastTime) / 1000;
+            if (dt > 0.1) dt = 0.1;
             lastTime = currentTime;
 
             ctx.clearRect(0, 0, w, h);
@@ -381,7 +462,6 @@
             requestAnimationFrame(loop);
         }
 
-        // Đảm bảo ảnh load hoàn tất rồi chạy vòng lặp mượt mà
         let imagesLoaded = 0;
         function checkLoad() {
             imagesLoaded++;
@@ -392,12 +472,11 @@
         userStickerImg.onload = checkLoad;
         kittyStickerImg.onload = checkLoad;
 
-        // Chạy khẩn cấp nếu mạng tải ảnh chậm quá 1.5 giây
         setTimeout(() => {
             if (imagesLoaded < 2) requestAnimationFrame(loop);
         }, 1500);
 
-        // --- HIỆU ỨNG PARALLAX 3D GIAO DIỆN ---
+        // --- HIỆU ỨNG GIAO DIỆN PARALLAX ---
         const view3d = document.getElementById('view3d');
         document.addEventListener('mousemove', (e) => {
             const ax = (window.innerWidth / 2 - e.pageX) / 25;
@@ -405,18 +484,21 @@
             view3d.style.transform = `rotateY(${ax}deg) rotateX(${-ay}deg)`;
         });
 
-        // --- CLICK MÀN HÌNH POPUP LẤP LÁNH ---
-        const sparkles = ['🌸', '💖', '✨', '🎀'];
-        document.addEventListener('click', (e) => {
+        // --- HIỆU ỨNG TẠO SPARKLES KHI NHẤP CHUỘT ---
+        const sparkles = ['🌸', '💖', '✨', '🎀', '💕'];
+        function spawnSparkle(x, y) {
             const el = document.createElement('span');
             el.classList.add('click-sparkle');
             el.innerHTML = sparkles[Math.floor(Math.random() * sparkles.length)];
-            el.style.left = e.pageX + 'px';
-            el.style.top = e.pageY + 'px';
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
             el.style.fontSize = Math.random() * 10 + 20 + 'px';
             document.body.appendChild(el);
             setTimeout(() => el.remove(), 1000);
-        });
+        }
+
+        document.addEventListener('click', (e) => spawnSparkle(e.pageX, e.pageY));
+        document.addEventListener('click_fake', (e) => spawnSparkle(e.detail.pageX, e.detail.pageY));
     </script>
 </body>
 </html>
