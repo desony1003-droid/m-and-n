@@ -261,7 +261,7 @@
         <div id="letter2" class="content-box">
             <h3 style="color: var(--kitty-dark); margin-top: 0;">Album Your Name - Spotify 🎵</h3>
             <div class="music-box">
-                <iframe class="spotify-player" src="http://googleusercontent.com/spotify.com/8" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe class="spotify-player" src="https://open.spotify.com/embed/album/3g699gI9v8f6pS8bZ8vWnL" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 <p style="font-size: 0.8rem; color: #777; margin: 0;">(Nhấn nút Play trên khung Spotify để thưởng thức nhé!)</p>
             </div>
         </div>
@@ -307,9 +307,11 @@
     <script>
         function openLetter(index) {
             for (let i = 1; i <= 4; i++) {
-                document.getElementById('letter' + i).classList.remove('active');
+                const box = document.getElementById('letter' + i);
+                if (box) box.classList.remove('active');
             }
-            document.getElementById('letter' + index).classList.add('active');
+            const activeBox = document.getElementById('letter' + index);
+            if (activeBox) activeBox.classList.add('active');
             
             if(index === 4) {
                 document.getElementById('lock-screen').style.display = 'block';
@@ -324,7 +326,6 @@
                 document.getElementById('lock-screen').style.display = 'none';
                 document.getElementById('secret-content').style.display = 'block';
                 
-                // Hiệu ứng pháo hoa tim nhỏ khi mở khóa thành công
                 for(let i=0; i<15; i++) {
                     setTimeout(() => {
                         const fakeEvent = { pageX: window.innerWidth/2 + (Math.random()*200 - 100), pageY: window.innerHeight/2 + (Math.random()*200 - 100) };
@@ -336,64 +337,162 @@
             }
         }
 
-        // --- HỆ THỐNG MƯA RƠI DỒN DẬP TỰ ĐỘNG CHẠY NGAY ---
+        // --- HỆ THỐNG MƯA ĐỔ XUỐNG DỒN DẬP (CƠ CHẾ AN TOÀN ĐỘC LẬP) ---
         const canvas = document.getElementById('falling-canvas');
-        const ctx = canvas.getContext('2d');
-        let w = canvas.width = window.innerWidth;
-        let h = canvas.height = window.innerHeight;
-        
-        window.addEventListener('resize', () => {
-            w = canvas.width = window.innerWidth;
-            h = canvas.height = window.innerHeight;
-        });
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let w = canvas.width = window.innerWidth;
+            let h = canvas.height = window.innerHeight;
+            
+            window.addEventListener('resize', () => {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            });
 
-        // Đường dẫn ảnh trực tiếp làm sticker của bạn (.jpg)
-        const userStickerImg = new Image();
-        userStickerImg.src = 'https://i.ibb.co/gMWccYx2/image.jpg'; 
+            const userStickerImg = new Image();
+            userStickerImg.src = 'https://i.ibb.co/gMWccYx2/image.jpg'; 
 
-        const kittyStickerImg = new Image();
-        kittyStickerImg.src = 'https://i.pinimg.com/originals/a0/78/3e/a0783e1577908b981600f72295551ec4.png'; 
+            const kittyStickerImg = new Image();
+            kittyStickerImg.src = 'https://i.pinimg.com/originals/a0/78/3e/a0783e1577908b981600f72295551ec4.png'; 
 
-        const types = ['sakura', 'heart1', 'heart2', 'user_sticker', 'kitty_sticker'];
-        const itemsArray = [];
-        const maxItems = 100; // Mật độ dày đặc lãng mạn
+            const types = ['sakura', 'heart1', 'heart2', 'user_sticker', 'kitty_sticker'];
+            const itemsArray = [];
+            const maxItems = 100;
 
-        class FallingItem {
-            constructor() {
-                this.reset();
-                this.y = Math.random() * h; // Sinh ra rải rác ngay lập tức, không để màn hình trống
-            }
-
-            reset() {
-                this.x = Math.random() * w;
-                this.y = -50;
-                this.type = types[Math.floor(Math.random() * types.length)];
-                
-                if (this.type === 'user_sticker' || this.type === 'kitty_sticker') {
-                    this.size = Math.random() * 12 + 28; 
-                } else {
-                    this.size = Math.random() * 6 + 12;   
+            class FallingItem {
+                constructor() {
+                    this.reset();
+                    this.y = Math.random() * h; 
                 }
 
-                // Tốc độ nhanh dốc thẳng xuống tạo hiệu ứng mưa đổ ào lãng mạn
-                this.speedY = Math.random() * 140 + 170; 
-                this.speedX = Math.random() * 0.4 - 0.2; 
-                
-                this.angle = Math.random() * Math.PI * 2;
-                this.spinSpeed = Math.random() * 2.0 - 1.0; 
-                this.swingWave = Math.random() * Math.PI;
-                this.swingSpeed = Math.random() * 1.5 + 0.5; 
-                this.swingRange = Math.random() * 5 + 2; 
+                reset() {
+                    this.x = Math.random() * w;
+                    this.y = -50;
+                    this.type = types[Math.floor(Math.random() * types.length)];
+                    
+                    if (this.type === 'user_sticker' || this.type === 'kitty_sticker') {
+                        this.size = Math.random() * 12 + 28; 
+                    } else {
+                        this.size = Math.random() * 6 + 12;   
+                    }
+
+                    this.speedY = Math.random() * 140 + 170; 
+                    this.speedX = Math.random() * 0.4 - 0.2; 
+                    this.angle = Math.random() * Math.PI * 2;
+                    this.spinSpeed = Math.random() * 2.0 - 1.0; 
+                    this.swingWave = Math.random() * Math.PI;
+                    this.swingSpeed = Math.random() * 1.5 + 0.5; 
+                    this.swingRange = Math.random() * 5 + 2; 
+                }
+
+                draw() {
+                    ctx.save();
+                    let currentX = this.x + Math.sin(this.swingWave) * this.swingRange;
+                    ctx.translate(currentX, this.y);
+                    ctx.rotate(this.angle);
+
+                    if (this.type === 'sakura') {
+                        ctx.beginPath();
+                        ctx.fillStyle = "rgba(255, 183, 197, 0.9)";
+                        ctx.ellipse(0, 0, this.size, this.size / 1.5, 0, 0, 2 * Math.PI);
+                        ctx.fill();
+                    } else if (this.type === 'heart1') {
+                        ctx.font = `${this.size * 1.1}px Arial`;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('💖', 0, 0);
+                    } else if (this.type === 'heart2') {
+                        ctx.font = `${this.size * 1.1}px Arial`;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('💕', 0, 0);
+                    } else if (this.type === 'kitty_sticker') {
+                        if (kittyStickerImg.complete && kittyStickerImg.naturalWidth !== 0) {
+                            ctx.drawImage(kittyStickerImg, -this.size / 2, -this.size / 2, this.size, this.size);
+                        } else {
+                            ctx.font = `${this.size}px Arial`;
+                            ctx.fillText('🐱', -this.size/2, this.size/2);
+                        }
+                    } else if (this.type === 'user_sticker') {
+                        if (userStickerImg.complete && userStickerImg.naturalWidth !== 0) {
+                            ctx.beginPath();
+                            ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                            ctx.clip();
+                            ctx.drawImage(userStickerImg, -this.size / 2, -this.size / 2, this.size, this.size);
+                            
+                            ctx.beginPath();
+                            ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                            ctx.strokeStyle = "rgba(251, 111, 146, 0.85)";
+                            ctx.lineWidth = 2.5;
+                            ctx.stroke();
+                        } else {
+                            ctx.font = `${this.size}px Arial`;
+                            ctx.fillText('🌸', -this.size/2, this.size/2);
+                        }
+                    }
+                    ctx.restore();
+                }
+
+                update(dt) {
+                    this.y += this.speedY * dt;
+                    this.x += this.speedX;
+                    this.angle += this.spinSpeed * dt;
+                    this.swingWave += this.swingSpeed * dt;
+
+                    if (this.y > h + 50) {
+                        this.reset();
+                    }
+                }
             }
 
-            draw() {
-                ctx.save();
-                let currentX = this.x + Math.sin(this.swingWave) * this.swingRange;
-                ctx.translate(currentX, this.y);
-                ctx.rotate(this.angle);
+            for (let i = 0; i < maxItems; i++) {
+                itemsArray.push(new FallingItem());
+            }
 
-                if (this.type === 'sakura') {
-                    ctx.beginPath();
-                    ctx.fillStyle = "rgba(255, 183, 197, 0.9)";
-                    ctx.ellipse(0, 0, this.size, this.size / 1.5, 0, 0,
-                                
+            let lastTime = performance.now();
+            function loop(currentTime) {
+                let dt = (currentTime - lastTime) / 1000;
+                if (dt > 0.1) dt = 0.1;
+                lastTime = currentTime;
+
+                ctx.clearRect(0, 0, w, h);
+
+                for (let i = 0; i < itemsArray.length; i++) {
+                    itemsArray[i].update(dt);
+                    itemsArray[i].draw();
+                }
+
+                requestAnimationFrame(loop);
+            }
+            requestAnimationFrame(loop);
+        }
+
+        // --- 3D PARALLAX EFFECT ---
+        const view3d = document.getElementById('view3d');
+        if (view3d) {
+            document.addEventListener('mousemove', (e) => {
+                const ax = (window.innerWidth / 2 - e.pageX) / 25;
+                const ay = (window.innerHeight / 2 - e.pageY) / 25;
+                view3d.style.transform = `rotateY(${ax}deg) rotateX(${-ay}deg)`;
+            });
+        }
+
+        // --- SPARKLES CLICK ---
+        const sparkles = ['🌸', '💖', '✨', '🎀', '💕'];
+        function spawnSparkle(x, y) {
+            const el = document.createElement('span');
+            el.classList.add('click-sparkle');
+            el.innerHTML = sparkles[Math.floor(Math.random() * sparkles.length)];
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            el.style.fontSize = Math.random() * 10 + 20 + 'px';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1000);
+        }
+
+        document.addEventListener('click', (e) => spawnSparkle(e.pageX, e.pageY));
+        document.addEventListener('click_fake', (e) => spawnSparkle(e.detail.pageX, e.detail.pageY));
+    </script>
+</body>
+</html>
+
