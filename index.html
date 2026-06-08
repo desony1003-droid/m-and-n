@@ -58,6 +58,7 @@
             100% { transform: translateY(-8px); }
         }
 
+        /* Canvas nền cho cơn mưa đổ xuống */
         #falling-canvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -261,7 +262,7 @@
         <div id="letter2" class="content-box">
             <h3 style="color: var(--kitty-dark); margin-top: 0;">Album Your Name - Spotify 🎵</h3>
             <div class="music-box">
-                <iframe class="spotify-player" src="https://open.spotify.com/embed/album/4qApTp9557qYZzRLEih4uP?utm_source=generator&theme=0" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe class="spotify-player" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX8as9CqofY3m" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 <p style="font-size: 0.8rem; color: #777; margin: 0;">(Nhấn nút Play trên khung Spotify để thưởng thức nhé!)</p>
             </div>
         </div>
@@ -335,7 +336,7 @@
             }
         }
 
-        // --- CƠN MƯA ĐỔ XUỐNG MƯỢT MÀ (ĐÃ ĐỔI LINK ẢNH GỐC STICKER) ---
+        // --- HỆ THỐNG MƯA ĐỔ XUỐNG DỒN DẬP (HIỆN NGAY LẬP TỨC KHÔNG CHỜ LOAD) ---
         const canvas = document.getElementById('falling-canvas');
         const ctx = canvas.getContext('2d');
         let w = canvas.width = window.innerWidth;
@@ -346,21 +347,20 @@
             h = canvas.height = window.innerHeight;
         });
 
-        // Link ảnh gốc sticker trực tiếp
         const userStickerImg = new Image();
-        userStickerImg.src = 'https://i.ibb.co/gMWccYx2/image.jpg'; 
+        userStickerImg.src = 'https://i.ibb.co/gMWccYx2/image.jpg'; // Ảnh làm sticker mới
 
         const kittyStickerImg = new Image();
         kittyStickerImg.src = 'https://i.pinimg.com/originals/a0/78/3e/a0783e1577908b981600f72295551ec4.png'; 
 
         const types = ['sakura', 'heart1', 'heart2', 'user_sticker', 'kitty_sticker'];
         const itemsArray = [];
-        const maxItems = 120; 
+        const maxItems = 100; // Mật độ mưa dày lãng mạn
 
         class FallingItem {
             constructor() {
                 this.reset();
-                this.y = Math.random() * h; 
+                this.y = Math.random() * h; // Tạo vị trí ngẫu nhiên ngay từ đầu để không bị trống trang
             }
 
             reset() {
@@ -374,20 +374,20 @@
                     this.size = Math.random() * 6 + 12;   
                 }
 
-                this.speedY = Math.random() * 120 + 160; 
+                // Tốc độ dốc và nhanh như một cơn mưa đổ ào xuống dưới
+                this.speedY = Math.random() * 140 + 170; 
                 this.speedX = Math.random() * 0.4 - 0.2; 
                 
                 this.angle = Math.random() * Math.PI * 2;
                 this.spinSpeed = Math.random() * 2.0 - 1.0; 
                 this.swingWave = Math.random() * Math.PI;
                 this.swingSpeed = Math.random() * 1.5 + 0.5; 
-                this.swingRange = Math.random() * 6 + 2; 
+                this.swingRange = Math.random() * 5 + 2; 
             }
 
             draw() {
                 ctx.save();
                 let currentX = this.x + Math.sin(this.swingWave) * this.swingRange;
-                
                 ctx.translate(currentX, this.y);
                 ctx.rotate(this.angle);
 
@@ -407,5 +407,54 @@
                     ctx.textBaseline = 'middle';
                     ctx.fillText('💕', 0, 0);
                 } else if (this.type === 'kitty_sticker') {
-                    ctx.drawImage(kittyStickerImg, -this.size / 2, -
-        
+                    // Nếu ảnh mèo chưa kịp tải, vẽ chữ tạm để trang không trống
+                    if (kittyStickerImg.complete && kittyStickerImg.naturalWidth !== 0) {
+                        ctx.drawImage(kittyStickerImg, -this.size / 2, -this.size / 2, this.size, this.size);
+                    } else {
+                        ctx.font = `${this.size}px Arial`;
+                        ctx.fillText('🐱', -this.size/2, this.size/2);
+                    }
+                } else if (this.type === 'user_sticker') {
+                    // Nếu ảnh sticker chưa tải xong, tạm thời vẽ icon bức ảnh dễ thương để đảm bảo tính thẩm mỹ
+                    if (userStickerImg.complete && userStickerImg.naturalWidth !== 0) {
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                        ctx.clip();
+                        ctx.drawImage(userStickerImg, -this.size / 2, -this.size / 2, this.size, this.size);
+                        
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                        ctx.strokeStyle = "rgba(251, 111, 146, 0.85)";
+                        ctx.lineWidth = 2.5;
+                        ctx.stroke();
+                    } else {
+                        ctx.font = `${this.size}px Arial`;
+                        ctx.fillText('🖼️', -this.size/2, this.size/2);
+                    }
+                }
+                ctx.restore();
+            }
+
+            update(dt) {
+                this.y += this.speedY * dt;
+                this.x += this.speedX;
+                this.angle += this.spinSpeed * dt;
+                this.swingWave += this.swingSpeed * dt;
+
+                if (this.y > h + 50) {
+                    this.reset();
+                }
+            }
+        }
+
+        // Khởi tạo danh sách mưa rơi
+        for (let i = 0; i < maxItems; i++) {
+            itemsArray.push(new FallingItem());
+        }
+
+        // Vòng lặp luôn chạy trực tiếp độc lập
+        let lastTime = performance.now();
+        function loop(currentTime) {
+            let dt = (currentTime - lastTime) / 1000;
+            if (dt > 0.1) dt = 0.1
+            
