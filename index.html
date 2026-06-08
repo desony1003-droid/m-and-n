@@ -19,7 +19,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Comfortaa', cursive, sans-serif;
-            /* Nền bầu trời hoàng hôn Your Name hòa quyện sắc hồng Kitty */
             background: linear-gradient(180deg, #FFB7C5 0%, #FFAAA6 35%, #D4A5B8 70%, #83A4D4 100%);
             background-size: cover;
             background-attachment: fixed;
@@ -32,7 +31,7 @@
             perspective: 1200px;
         }
 
-        /* Hình ảnh Hello Kitty đặc trưng ở góc màn hình */
+        /* Hình Hello Kitty ở góc màn hình */
         .kitty-decoration {
             position: fixed;
             bottom: 15px;
@@ -40,7 +39,7 @@
             width: 90px;
             height: 90px;
             background: url('https://i.pinimg.com/originals/a0/78/3e/a0783e1577908b981600f72295551ec4.png') no-repeat center/contain;
-            opacity: 0.7;
+            opacity: 0.8;
             pointer-events: none;
             z-index: 5;
         }
@@ -60,7 +59,7 @@
             100% { transform: translateY(-8px); }
         }
 
-        /* Canvas cho hiệu ứng Cánh hoa và Trái tim đồng thời tự rơi */
+        /* Canvas hiệu ứng bầu trời tự rơi: Hoa đào, Trái tim, Hello Kitty và Sticker Ảnh bạn */
         #falling-canvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -68,7 +67,7 @@
             z-index: 2;
         }
 
-        /* 3 Thư kiểu hộp quà Hello Kitty 3D */
+        /* Khung chứa 3 bức thư 3D */
         .letters-container {
             display: flex;
             justify-content: center;
@@ -77,7 +76,6 @@
             margin-top: 35px;
             z-index: 10;
             transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
         }
 
         .envelope {
@@ -98,7 +96,6 @@
             position: relative;
         }
 
-        /* Thêm chiếc nơ đỏ Hello Kitty lên đầu mỗi bức thư */
         .envelope::before {
             content: "🎀";
             position: absolute;
@@ -129,7 +126,7 @@
             transform: scale(1.25) rotate(15deg);
         }
 
-        /* Khung hiển thị nội dung tinh tế */
+        /* Khung hiển thị hộp thư */
         .content-container {
             margin-top: 40px;
             width: 90%;
@@ -140,7 +137,7 @@
         }
 
         .content-box {
-            background: rgba(255, 255, 255, 0.82);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 2px solid rgba(255, 255, 255, 0.9);
@@ -168,51 +165,23 @@
             border: 4px solid white;
         }
 
-        /* Đĩa nhạc xoay 3D lãng mạn */
+        /* Khung nhạc Spotify */
         .music-box {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
-        }
-
-        .disc-container {
-            position: relative;
-            width: 190px;
-            height: 190px;
-        }
-
-        .disc {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            border: 6px solid white;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            animation: spin 7s linear infinite;
-            animation-play-state: paused;
-            object-fit: cover;
-        }
-
-        /* Tâm đĩa nhạc có hình Hello Kitty */
-        .disc-container::after {
-            content: "";
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px; height: 40px;
-            background: white url('https://i.pinimg.com/originals/a0/78/3e/a0783e1577908b981600f72295551ec4.png') no-repeat center/contain;
-            border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        audio {
             width: 100%;
-            margin-top: 15px;
-            accent-color: var(--kitty-dark);
         }
 
-        /* Khung viết tâm thư dáng tay */
+        .spotify-player {
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            width: 100%;
+            height: 380px;
+        }
+
+        /* Khung viết thư tâm tư */
         .love-letter {
             font-family: 'Patrick Hand', cursive;
             font-size: 1.3rem;
@@ -226,7 +195,7 @@
             margin-bottom: 25px;
         }
 
-        /* Hiệu ứng nhấp màn hình lấp lánh thêm phần sinh động */
+        /* Hiệu ứng nhấp chuột lấp lánh */
         .click-sparkle {
             position: absolute;
             pointer-events: none;
@@ -241,22 +210,17 @@
 </head>
 <body>
 
-    <!-- Hình trang trí Hello Kitty dễ thương -->
     <div class="kitty-decoration"></div>
-
-    <!-- Mưa hoa đào và trái tim tự rơi -->
     <canvas id="falling-canvas"></canvas>
 
     <h1>Gửi Em Bé Của Anh 🎀</h1>
 
-    <!-- 3 Thiệp 3D Hello Kitty -->
     <div class="letters-container" id="view3d">
         <div class="envelope" onclick="openLetter(1)"><span>🌸</span><p>Kỷ Niệm</p></div>
         <div class="envelope" onclick="openLetter(2)"><span>🌌</span><p>Giai Điệu</p></div>
         <div class="envelope" onclick="openLetter(3)"><span>💌</span><p>Tâm Tư</p></div>
     </div>
 
-    <!-- Hộp nội dung -->
     <div class="content-container">
         
         <!-- Bức thư 1 -->
@@ -266,18 +230,13 @@
             <p style="margin-top: 12px; font-style: italic; color: #666; font-size: 0.85rem;">"Dù em ở bất kỳ đâu, anh nhất định sẽ đi tìm em."</p>
         </div>
 
-        <!-- Bức thư 2 -->
+        <!-- Bức thư 2: Nhạc Your Name qua Spotify Player -->
         <div id="letter2" class="content-box">
-            <h3 style="color: var(--kitty-dark); margin-top: 0;">Giai điệu Your Name 🎵</h3>
+            <h3 style="color: var(--kitty-dark); margin-top: 0;">Album Your Name - Spotify 🎵</h3>
             <div class="music-box">
-                <div class="disc-container">
-                    <img id="musicDisc" class="disc" src="https://i.ibb.co/4RdYLCLb/1000006263.jpg" alt="Disc">
-                </div>
-                <!-- Bản nhạc Nandemonaiya (Your Name) huyền thoại -->
-                <audio id="myAudio" controls loop>
-                    <source src="https://files.catbox.moe/k376sc.mp3" type="audio/mpeg">
-                </audio>
-                <p style="font-size: 0.8rem; color: #777; margin: 0;">(Hãy nhấn Play để khởi động đĩa nhạc xoay tròn nhé!)</p>
+                <!-- Nhúng đúng link Album Spotify của bạn -->
+                <iframe class="spotify-player" src="https://open.spotify.com/embed/album/4qApTp9557qYZzRLEih4uP?utm_source=generator&theme=0" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <p style="font-size: 0.8rem; color: #777; margin: 0;">(Nhấn nút Play trên khung Spotify để thưởng thức nhé!)</p>
             </div>
         </div>
 
@@ -293,13 +252,13 @@
 
                 Yêu em rất nhiều! 💖
             </div>
-            <img class="img-couple" src="https://i.ibb.co/608dSJPj/1000006259.png" alt="Em bé" style="max-height: 260px;">
+            <!-- Thay ảnh xích đu góc nghiêng bằng ảnh chính diện bạn ngồi xích đu 1000006357.jpg -->
+            <img class="img-couple" src="https://i.ibb.co/3mNn0vSg/1000006357.jpg" alt="Ảnh xích đu của bạn">
         </div>
 
     </div>
 
     <script>
-        // --- 1. ĐÓNG MỞ THƯ ---
         function openLetter(index) {
             for (let i = 1; i <= 3; i++) {
                 document.getElementById('letter' + i).classList.remove('active');
@@ -307,13 +266,7 @@
             document.getElementById('letter' + index).classList.add('active');
         }
 
-        // --- 2. ĐĨA NHẠC XOAY ---
-        const audio = document.getElementById('myAudio');
-        const disc = document.getElementById('musicDisc');
-        audio.onplay = () => { disc.style.animationPlayState = 'running'; };
-        audio.onpause = () => { disc.style.animationPlayState = 'paused'; };
-
-        // --- 3. ĐỒNG THỜI TỰ RƠI: HOA ANH ĐÀO & TRÁI TIM ---
+        // --- HỆ THỐNG HIỆU ỨNG TỰ RƠI CHUNG (STIKER ẢNH 1000006357.jpg + TIM + KITTY + SAKURA) ---
         const canvas = document.getElementById('falling-canvas');
         const ctx = canvas.getContext('2d');
         let w = canvas.width = window.innerWidth;
@@ -324,17 +277,30 @@
             h = canvas.height = window.innerHeight;
         });
 
+        // Khởi tạo các Sticker ảnh
+        const userStickerImg = new Image();
+        userStickerImg.src = 'https://i.ibb.co/3mNn0vSg/1000006357.jpg'; // Link ảnh 1000006357.jpg đã chuyển thành sticker
+
+        const kittyStickerImg = new Image();
+        kittyStickerImg.src = 'https://i.pinimg.com/originals/a0/78/3e/a0783e1577908b981600f72295551ec4.png'; // Hello kitty
+
+        const types = ['sakura', 'heart1', 'heart2', 'user_sticker', 'kitty_sticker'];
         const itemsArray = [];
-        const types = ['sakura', 'heart1', 'heart2'];
 
         class FallingItem {
             constructor() {
                 this.x = Math.random() * w;
                 this.y = Math.random() * h - h;
                 this.type = types[Math.floor(Math.random() * types.length)];
-                this.size = Math.random() * 10 + 8;
-                this.speedY = Math.random() * 1.2 + 0.8;
-                this.speedX = Math.random() * 0.8 + 0.2;
+                this.size = Math.random() * 12 + 10;
+                
+                // Điều chỉnh kích thước sticker ảnh to hơn một chút cho rõ
+                if(this.type === 'user_sticker' || this.type === 'kitty_sticker') {
+                    this.size = Math.random() * 15 + 25; 
+                }
+
+                this.speedY = Math.random() * 1.3 + 0.7;
+                this.speedX = Math.random() * 0.6 - 0.3;
                 this.angle = Math.random() * 360;
                 this.spin = Math.random() * 2 - 1;
             }
@@ -344,21 +310,31 @@
                 ctx.rotate(this.angle * Math.PI / 180);
 
                 if (this.type === 'sakura') {
-                    // Vẽ cánh hoa anh đào hồng pastel
                     ctx.beginPath();
                     ctx.fillStyle = "rgba(255, 183, 197, 0.9)";
-                    ctx.ellipse(0, 0, this.size, this.size / 1.6, 0, 0, 2 * Math.PI);
+                    ctx.ellipse(0, 0, this.size, this.size / 1.5, 0, 0, 2 * Math.PI);
                     ctx.fill();
                 } else if (this.type === 'heart1') {
-                    // Vẽ kí tự trái tim lãng mạn màu hồng đậm
-                    ctx.fillStyle = "rgba(251, 111, 146, 0.85)";
                     ctx.font = `${this.size * 1.2}px Arial`;
                     ctx.fillText('💖', -this.size/2, this.size/2);
-                } else {
-                    // Trái tim hồng nhạt
-                    ctx.fillStyle = "rgba(255, 194, 209, 0.85)";
+                } else if (this.type === 'heart2') {
                     ctx.font = `${this.size * 1.2}px Arial`;
                     ctx.fillText('💕', -this.size/2, this.size/2);
+                } else if (this.type === 'kitty_sticker') {
+                    // Vẽ sticker mèo Hello Kitty tròn lơ lửng
+                    ctx.drawImage(kittyStickerImg, -this.size/2, -this.size/2, this.size, this.size);
+                } else if (this.type === 'user_sticker') {
+                    // Cắt ảnh 1000006357.jpg của bạn thành sticker hình tròn bo góc dễ thương
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                    ctx.clip();
+                    ctx.drawImage(userStickerImg, -this.size/2, -this.size/2, this.size, this.size);
+                    // Tạo viền trắng cho sticker
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                    ctx.strokeStyle = "rgba(255,255,255,0.8)";
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
                 }
                 ctx.restore();
             }
@@ -366,38 +342,39 @@
                 this.y += this.speedY;
                 this.x += this.speedX;
                 this.angle += this.spin;
-                if (this.y > h || this.x > w) {
-                    this.y = -20;
+                if (this.y > h) {
+                    this.y = -30;
                     this.x = Math.random() * w;
                 }
             }
         }
 
-        // Tạo 55 vật thể vừa hoa vừa tim tự rơi liên tục
-        for (let i = 0; i < 55; i++) itemsArray.push(new FallingItem());
+        // Tạo 60 vật thể vừa hoa, tim, kitty, sticker tự rơi đồng thời
+        for (let i = 0; i < 60; i++) itemsArray.push(new FallingItem());
 
         function loop() {
             ctx.clearRect(0, 0, w, h);
             itemsArray.forEach(item => { item.update(); item.draw(); });
             requestAnimationFrame(loop);
         }
-        loop();
+        
+        // Đợi ảnh tải xong rồi chạy hiệu ứng rơi
+        userStickerImg.onload = kittyStickerImg.onload = () => {
+            if(itemsArray.length === 60) loop();
+        };
 
-        // --- 4. HIỆU ỨNG PARALLAX 3D CHO THIỆP ---
+        // Kích hoạt chạy dự phòng nếu ảnh lỗi hoặc tải chậm
+        setTimeout(loop, 1000);
+
+        // --- HIỆU ỨNG PARALLAX 3D CHO THIỆP ---
         const view3d = document.getElementById('view3d');
         document.addEventListener('mousemove', (e) => {
             const ax = (window.innerWidth / 2 - e.pageX) / 25;
             const ay = (window.innerHeight / 2 - e.pageY) / 25;
             view3d.style.transform = `rotateY(${ax}deg) rotateX(${-ay}deg)`;
         });
-        document.addEventListener('touchmove', (e) => {
-            const touch = e.touches[0];
-            const ax = (window.innerWidth / 2 - touch.pageX) / 30;
-            const ay = (window.innerHeight / 2 - touch.pageY) / 30;
-            view3d.style.transform = `rotateY(${ax}deg) rotateX(${-ay}deg)`;
-        });
 
-        // --- 5. CHẠM MÀN HÌNH BÙNG NỔ ICON LẤP LÁNH ---
+        // --- CLICK MÀN HÌNH BÙNG NỔ SPARKLES ---
         const sparkles = ['🌸', '💖', '✨', '🎀'];
         document.addEventListener('click', (e) => {
             const el = document.createElement('span');
